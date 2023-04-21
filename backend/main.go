@@ -86,7 +86,7 @@ func (s *Server) addNewLink(w http.ResponseWriter, r *http.Request) {
 		link.Link,
 	)
 	tx.Commit()
-	returnLink := fmt.Sprintf("https://beanl.ink/%s", id_link)
+	returnLink := fmt.Sprintf("https://backend.beanl.ink/%s", id_link)
 
 	json.NewEncoder(w).Encode(Link{Link: returnLink})
 }

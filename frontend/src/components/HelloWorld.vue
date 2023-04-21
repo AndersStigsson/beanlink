@@ -31,7 +31,7 @@ export default {
     methods: {
         async getShortLink() {
             this.resultLink = null;
-            const res = await axios.post('http://localhost:10033/add', {
+            const res = await axios.post('https://backend.beanl.ink/add', {
                 link: this.link
             });
             if (res.data.error) {
