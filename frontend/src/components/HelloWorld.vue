@@ -7,6 +7,9 @@
             placeholder="beanconqueror link"
             @keyup.enter="getShortLink"
         >
+        <button @click="getShortLink">
+            Generate
+        </button>
     </div>
     <div
         v-if="resultLink"
