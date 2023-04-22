@@ -85,7 +85,7 @@ func (s *Server) addNewLink(w http.ResponseWriter, r *http.Request) {
 		link.Link,
 	)
 	tx.Commit()
-	returnLink := fmt.Sprintf("https://backend.beanl.ink/%s", id_link)
+	returnLink := fmt.Sprintf("https://beanl.ink/l/%s", id_link)
 
 	json.NewEncoder(w).Encode(Link{Link: returnLink})
 }
@@ -107,7 +107,7 @@ func (s *Server) handleRequests() {
 	myRouter := mux.NewRouter().StrictSlash(true)
 	myRouter.HandleFunc("/", s.homePage)
 	myRouter.HandleFunc("/add", s.addNewLink)
-	myRouter.HandleFunc("/{id}", s.returnLink)
+	myRouter.HandleFunc("/l/{id}", s.returnLink)
 
 	headersOk := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "x-api-token"})
 	// originsOk := handlers.AllowedOrigins([]string{"*"})
