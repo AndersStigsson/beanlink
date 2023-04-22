@@ -10,7 +10,7 @@ COPY ./frontend/yarn.lock ./
 RUN yarn install
 
 COPY ./frontend/ .
-COPY ./frontend/.env .
+#COPY ./frontend/.env .
 
 RUN yarn build
 

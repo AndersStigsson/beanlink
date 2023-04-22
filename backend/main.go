@@ -60,8 +60,7 @@ func main() {
 }
 
 func (s *Server) homePage(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Welcome to the HomePage!")
-	fmt.Println("Endpoint Hit: homePage")
+	http.Redirect(w, r, "https://add.beanl.ink", http.StatusSeeOther)
 }
 
 func (s *Server) addNewLink(w http.ResponseWriter, r *http.Request) {
