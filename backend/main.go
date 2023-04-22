@@ -74,6 +74,14 @@ func (s *Server) addNewLink(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var exists string
+
+	err := s.db.Get(&exists, "SELECT id_link FROM links WHERE return_link = ?", link)
+	if err != nil {
+		returnLink := fmt.Sprintf("https://beanl.ink/l/%s", exists)
+		json.NewEncoder(w).Encode(Link{Link: returnLink})
+	}
+
 	id_link := String(10)
 
 	tx := s.db.MustBegin()
