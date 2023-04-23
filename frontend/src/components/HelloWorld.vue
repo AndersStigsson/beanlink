@@ -14,7 +14,14 @@
     <div
         v-if="resultLink"
     >
-        {{ resultLink }}
+        <div>
+            {{ resultLink }}
+            <button
+                @click="copyToClipboard"
+            >
+                Copy to clipboard
+            </button>
+        </div>
     </div>
   </div>
 
@@ -32,6 +39,9 @@ export default {
         }
     },
     methods: {
+        copyToClipboard() {
+            navigator.clipboard.writeText(this.resultLink)
+        },
         async getShortLink() {
             this.resultLink = null;
             const res = await axios.post('https://beanl.ink/add', {
