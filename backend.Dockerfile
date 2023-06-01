@@ -5,6 +5,7 @@ WORKDIR /app
 COPY ./backend/go.mod .
 COPY ./backend/go.sum .
 COPY ./backend/.env .
+COPY ./backend/protos/ ./protos
 
 RUN go mod download
 
