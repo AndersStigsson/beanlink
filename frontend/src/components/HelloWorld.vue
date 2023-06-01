@@ -15,11 +15,17 @@
         v-if="resultLink"
     >
         <div>
+            <p> {{ discordData }} </p>
             {{ resultLink }}
+            <button
+                @click="copyForDiscord"
+            >
+                Copy for Discord
+            </button>
             <button
                 @click="copyToClipboard"
             >
-                Copy to clipboard
+                Copy only link
             </button>
         </div>
     </div>
@@ -35,12 +41,17 @@ export default {
     data() {
         return {
             link: '',
-            resultLink: null
+            resultLink: null,
+            discordData: null,
+            publicLink: false
         }
     },
     methods: {
         copyToClipboard() {
             navigator.clipboard.writeText(this.resultLink)
+        },
+        copyForDiscord() {
+            navigator.clipboard.writeText(this.discordData)
         },
         async getShortLink() {
             this.resultLink = null;
@@ -52,6 +63,7 @@ export default {
                 return;
             }
             this.resultLink = res.data.link;
+            this.discordData = `:beans: ${res.data.name} ${res.data.roaster} <${this.resultLink}>`
         }
     }
 }

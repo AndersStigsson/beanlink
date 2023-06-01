@@ -9,6 +9,8 @@ import (
 	"os"
 	"regexp"
 
+	"beanlink/protos"
+
 	_ "github.com/go-sql-driver/mysql"
 
 	"github.com/gorilla/handlers"
@@ -18,8 +20,10 @@ import (
 )
 
 type Link struct {
-	Link  string `json:"link"`
-	Error string `json:"error"`
+	Link    string  `json:"link"`
+	Error   string  `json:"error"`
+	Name    string  `json:"name"`
+	Roaster *string `json:"roaster"`
 }
 
 type Server struct {
@@ -67,7 +71,7 @@ func (s *Server) addNewLink(w http.ResponseWriter, r *http.Request) {
 	reqBody, _ := io.ReadAll(r.Body)
 	var link Link
 	json.Unmarshal(reqBody, &link)
-	reg := regexp.MustCompile(`^.*beanconqueror.com.*$`)
+	reg := regexp.MustCompile(`^https://beanconqueror.com.*$`)
 	match := reg.FindStringSubmatch(link.Link)
 	if match == nil {
 		json.NewEncoder(w).Encode(Link{Error: "Mismatched url"})
@@ -79,9 +83,18 @@ func (s *Server) addNewLink(w http.ResponseWriter, r *http.Request) {
 	s.db.Get(&exists, "SELECT id_link FROM links WHERE return_link = ?", link.Link)
 	if exists != "" {
 		existingLink := fmt.Sprintf("https://beanl.ink/l/%s", exists)
-		json.NewEncoder(w).Encode(Link{Link: existingLink})
+		var bean *protos.BeanProto
+		shareUserBeanZero := ParseUrlToGetBeanInfo(link.Link)
+		bean = GetBean(shareUserBeanZero)
+		fmt.Printf("Bean name: %v", bean.Name)
+		fmt.Printf("Bean roaster: %v", bean.Roaster)
+		json.NewEncoder(w).Encode(Link{Link: existingLink, Name: bean.Name, Roaster: bean.Roaster})
 		return
 	}
+
+	var bean *protos.BeanProto
+	shareUserBeanZero := ParseUrlToGetBeanInfo(link.Link)
+	bean = GetBean(shareUserBeanZero)
 
 	id_link := String(10)
 
@@ -96,7 +109,7 @@ func (s *Server) addNewLink(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 	returnLink := fmt.Sprintf("https://beanl.ink/l/%s", id_link)
 
-	json.NewEncoder(w).Encode(Link{Link: returnLink})
+	json.NewEncoder(w).Encode(Link{Link: returnLink, Name: bean.Name, Roaster: bean.Roaster})
 }
 
 func (s *Server) returnLink(w http.ResponseWriter, r *http.Request) {

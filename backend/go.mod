@@ -8,6 +8,7 @@ require (
 	github.com/gorilla/mux v1.8.0
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/joho/godotenv v1.5.1
+	google.golang.org/protobuf v1.30.0
 )
 
 require github.com/felixge/httpsnoop v1.0.1 // indirect
