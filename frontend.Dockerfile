@@ -1,16 +1,15 @@
-FROM node:16-alpine
+FROM node:lts-alpine
 
 RUN yarn global add serve
 
 WORKDIR /app
 
-COPY ./frontend/package*.json ./
+COPY ./frontend/package.json ./
 COPY ./frontend/yarn.lock ./
 
 RUN yarn install
 
 COPY ./frontend/ .
-#COPY ./frontend/.env .
 
 RUN yarn build
 
