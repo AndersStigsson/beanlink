@@ -49,13 +49,13 @@ func ParseUrlToGetBeanInfo(text string) string {
 	}
 	queryParams := u.Query()
 
-	shareUserBeanZero := strings.ReplaceAll(queryParams.Get("shareUserBean0"), " ", "+")
-	shareBeans := shareUserBeanZero
-	if shareUserBeanOne := strings.ReplaceAll(queryParams.Get("shareUserBean1"), " ", "+"); len(shareUserBeanOne) > 0 {
-		shareBeans = fmt.Sprintf("%v%v", shareBeans, shareUserBeanOne)
-	}
-	if shareUserBeanTwo := strings.ReplaceAll(queryParams.Get("shareUserBean2"), " ", "+"); len(shareUserBeanTwo) > 0 {
-		shareBeans = fmt.Sprintf("%v%v", shareBeans, shareUserBeanTwo)
+	count := strings.Count(u.RequestURI(), "shareUserBean")
+
+	shareBeans := ""
+	for i := 0; i < count; i++ {
+		if shareUserBeanTemp := strings.ReplaceAll(queryParams.Get(fmt.Sprintf("shareUserBean%d", i)), " ", "+"); len(shareUserBeanTemp) > 0 {
+			shareBeans = fmt.Sprintf("%v%v", shareBeans, shareUserBeanTemp)
+		}
 	}
 	return shareBeans
 }
