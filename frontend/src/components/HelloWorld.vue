@@ -10,6 +10,30 @@
         <button @click="getShortLink">
             Generate
         </button>
+            <div class="buymeacoffee">
+                <div>
+                    <div>
+                        Do you want to support beanlink's cost of server and domain? Buy me a coffee. 
+                    </div>
+                    <br>
+
+                    <div>
+                        Please do NOT feel obligated to do this.
+                        The total cost per YEAR for beanl.ink is about €35 and it is in no way a risk to my personal finances.
+                        This is ONLY if you WANT to support me and like the service that beanlink provides.
+                    </div>
+                </div>
+                <a 
+                    href="https://www.buymeacoffee.com/beanlink"
+                    target="_blank"
+                >
+                    <img 
+                        src="https://cdn.buymeacoffee.com/buttons/v2/arial-yellow.png"
+                        alt="Buy Me A Coffee"
+                        style="height: 60px !important;width: 217px !important;"
+                    >
+                </a>
+            </div>
     </div>
     <div
         v-if="resultLink"
@@ -71,6 +95,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.buymeacoffee {
+    position: absolute;
+    width:95%;
+    bottom:0;
+}
 h3 {
   margin: 40px 0 0;
 }
